@@ -1,0 +1,10 @@
+# Secrets never enter the image (Day 6 secrets law): the key arrives at
+# `docker run -e ...` / --env-file time, or from the host's environment.
+.env
+
+# Not runtime content — smaller context, faster builds.
+.venv/
+__pycache__/
+*.pyc
+agent.log
+.git/

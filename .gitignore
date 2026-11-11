@@ -1,0 +1,43 @@
+me/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+secrets.json
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Testing and Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+flake8/
+
+# FastAPI / Uvicorn / Log files
+*.log
+logs/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

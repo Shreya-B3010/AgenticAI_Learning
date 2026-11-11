@@ -1,0 +1,7 @@
+# What the Vercel CLI must NOT upload (same secrets law as .dockerignore).
+.env
+agent.log
+.venv/
+__pycache__/
+*.pyc
+.git/

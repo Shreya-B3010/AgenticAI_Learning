@@ -1,0 +1,19 @@
+# Day 6 service runtime — this file IS the deployment contract:
+#   Docker build and Vercel both install EXACTLY this (keep it lean; Vercel's
+#   Python bundle limit is 500 MB uncompressed). 
+fastapi
+uvicorn[standard]
+pydantic
+langgraph
+langchain-google-genai
+langchain-ollama
+chromadb
+faiss-cpu        # module-level import in Day2\D2P2.py (chroma path never calls it)
+pinecone         # module-level import in Day2\D2P2.py (same — import-only cost)
+numpy            # MMR math in Day3\D3P1.py
+ollama           # module-level import in Day3\D3P1.py (import needs no server)
+google-genai     # `from google import genai` in Day3
+python-dotenv
+
+streamlit       # UI — Block B runs it on your laptop, against the API
+requests        # UI's HTTP client (pulled in by other deps anyway)   

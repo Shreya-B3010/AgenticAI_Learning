@@ -1,0 +1,46 @@
+services:
+
+  api:
+    build: .
+    container_name: campus-api
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - ../../.env
+
+    environment:
+      AGENT_BRAIN: ${AGENT_BRAIN:-gemini}
+      # The `ollama` package AND langchain_ollama both read OLLAMA_HOST
+      # (verified). From inside a container the host machine is NEVER
+      # localhost — it is host.docker.internal.
+      OLLAMA_HOST: http://host.docker.internal:11434
+
+    volumes:
+      # agent.log lands on the HOST so `python trace_viewer.py` can read it.
+      # Create the empty file FIRST — if it is missing, Docker creates a
+      # DIRECTORY at this path and the log write silently falls back to
+      # stdout only:  if (-not (Test-Path agent.log)) { New-Item agent.log -ItemType File | Out-Null }
+      - ./agent.log:/app/agent.log
+
+    # No `command:` override on purpose: the image CMD is the ONE launch
+    # command (it reads ${PORT:-8000} — same artifact locally and on Vercel).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  ui:
+    build: .
+    container_name: campus-ui
+    ports:
+      - "8501:8501"
+
+    environment:
+      AGENT_API: http://api:8000
+
+    command: >
+      python -m streamlit run app.py
+      --server.address 0.0.0.0
+      --server.port 8501
+
+    depends_on:
+      - api
